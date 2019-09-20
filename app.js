@@ -3,7 +3,11 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const multer = require("multer");
+const googleTranslate = require("google-translate")(
+  "AIzaSyBAW3sA0BplDK2ox7yJkI2iMKtHgVgP91k"
+);
 const { TesseractWorker } = require("tesseract.js");
+
 const worker = new TesseractWorker();
 
 //Storage
@@ -31,24 +35,34 @@ app.post("/upload", (req, res) => {
 
       worker
         .recognize(data, "eng", { tessjs_create_pdf: "1" })
+
         .progress(progress => {
           console.log(progress);
-       
         })
+
         .then(result => {
-          res.redirect("/download");
+          let text = result.text;
+          googleTranslate.translate(text, "hu", function(err, translation) {
+            let translationTextResult = translation.translatedText;
+            console.log(text);
+            console.log(translationTextResult);
+            res.send(`Original Text: ${text} <br/> Translated Text: ${translationTextResult}`);
+          });
+          
+          // res.redirect("/download");
         })
-        .finally(() => worker.terminate());
+        .finally(() => {
+          worker.terminate();
+        });
     });
   });
 });
 
 app.get("/download", (req, res) => {
-  // console.log(
-  //   (document.getElementById("loading").innerHTML = "Please wait...")
-  // )
   const file = `${__dirname}/tesseract.js-ocr-result.pdf`;
+  // const translatedFile = `${__dirname}/tesseract.js-ocr-result-hu.pdf`;
   res.download(file);
+  // await res.download(translatedFile);
 });
 
 //Start up our server
