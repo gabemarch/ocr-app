@@ -4,7 +4,7 @@ const app = express();
 const fs = require("fs");
 const multer = require("multer");
 const googleTranslate = require("google-translate")(
-  "AIzaSyBAW3sA0BplDK2ox7yJkI2iMKtHgVgP91k"
+ 
 );
 const { TesseractWorker } = require("tesseract.js");
 
