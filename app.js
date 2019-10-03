@@ -8,7 +8,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const routes = require("./routes/routes");
 const googleTranslate = require("google-translate")(
-  "AIzaSyBAW3sA0BplDK2ox7yJkI2iMKtHgVgP91k"
+ 
 );
 const { TesseractWorker } = require("tesseract.js");
 
