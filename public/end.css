@@ -1,0 +1,8 @@
+footer {
+    position: relative;
+    color: #fff;
+    font-family: Roboto;
+    font-weight: bold;
+    padding: 10px 20px;
+    background: #333;
+}

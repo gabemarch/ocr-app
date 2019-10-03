@@ -1,0 +1,36 @@
+<%- include('../includes/head.ejs') %>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<body>
+    <div class="upload">
+        <%- include('../includes/nav.ejs') %>
+        <div class="steps-guide">
+            <div id="steps" class="first-step">
+                <p>First Step</p>
+                <label for="file"> <img src="assets/upload-button.png" alt="upload-button"></label>
+                <form action="/download" method="POST" enctype="multipart/form-data" id="form">
+                    <input type="file" name="avatar" id="file" class="inputfile" />
+                    <label for="file">Upload Your Image</label>
+
+            </div>
+            <div id="steps" class="second-step">
+                <p>Second Step</p>
+                <img src="assets/language.png" alt="">
+                <select name="lang" id="lang">
+                    <option value="">Please select a language </option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="it">Italian</option>
+                    <option value="hu">Hungarian</option>
+                </select>
+            </div>
+            <div id="steps" class="third-step">
+                <p>Third Step</p>
+               <label for="convert-btn"> <img src="assets/circle.png" alt=""></label>
+                <button type="submit" id="convert-btn">Convert</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include('../includes/end.ejs') %>

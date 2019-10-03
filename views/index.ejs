@@ -1,32 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="/style.css" />
-    <title>Img to PDF</title>
+<%- include('../includes/head.ejs') %>
   </head>
   <body>
-    <header>
-      <h1>Image To PDF</h1>
-      <p>Convert your image to text</p>
-    </header>
-    <h2>Please upload an image to convert into text and download in PDF!</h2>
-    <div class="converter">
-      <form
-        action="/upload"
-        method="POST"
-        enctype="multipart/form-data"
-        id="form"
-      >
-        <input type="file" name="avatar" id="file" class="inputfile" />
-        <label for="file">Choose a file</label>
-        <button type="submit" id="convert-btn">Convert</button>
-      </form>
-      <div id="loading"></div>
-
+    <div class="main-container">
+        <%- include('../includes/nav.ejs') %>
+      <!-- <img src="assets/picture.png" alt="picture-icon">
+        <img src="assets/file.png" alt="file-icon">
+        <img src="assets/pdf.png" alt="pdf-icon"> -->
+        <div class="description">
+          <h2 class="description-heading">How does it work?</h2>
+          <ul class="description-list">
+            <li>Upload</li>
+            <li>Choose language</li>
+            <li>Translate</li>
+            <li>Download</li>
+          </ul>
+        </div>
+      <div class="converter">   
+        <form
+          action="/upload"
+          method="POST"
+          enctype="multipart/form-data"
+          id="form"
+        >
+        <h2>Upload your image</h2>
+          <p>How does it work? Upload an image with text in it, choose a language to translate, and click on the "Convert" button. The OCR engine will recognize the text, translate, and convert into a PDF file. </p>
+          <div class="buttons">
+          <input type="file" name="avatar" id="file" class="inputfile" />
+          <label for="file">Choose a file</label>
+         <select name="lang" id="lang">
+           <option value="">--Please select a language--</option>
+           <option value="fr">French</option>
+           <option value="de">German</option>
+           <option value="it">Italian</option>
+           <option value="hu">Hungarian</option>
+         </select>
+          <button type="submit" id="convert-btn">Convert</button>
+          </div>
+        </form>
+        <div id="loading"></div>
+      </div>
     </div>
-    <script src="script.js"></script>
-  </body>
-</html>
+    <footer>
+      <span>Gabor Szilagyi | 2019</span>
+    </footer>
+<%- include('../includes/end.ejs') %>

@@ -1,0 +1,22 @@
+<%- include("../includes/head.ejs") %>
+</head>
+
+<body>
+    <div class="download">
+        <%- include('../includes/nav.ejs') %>
+        <div class="download-section">
+        <div class="download-original-text">
+           <span>Original Text:</span>  
+           <p class="original-text"><%= text %> </p>
+           <a href="/download/original" class="download-cta">Download Original in PDF</a>
+        </div>
+        <div class="download-translated-text">
+            <span> Translated Text: </span>
+            <p class="translated-text"><%= translationTextResult %> </p>
+            <a href="/download/translated" class="download-cta">Download Translated in PDF</a>
+        </div>
+    </div>
+    <a href="/" class="back-to-home"> &#x2190;Back To Home</a>
+    </div>
+
+    <%- include('../includes/end.ejs') %>

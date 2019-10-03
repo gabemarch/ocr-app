@@ -1,13 +1,14 @@
+const formSubmit = document.getElementById("convert-btn");
+const downloadBtn = document.getElementById("downloadBtn");
 
+const langSelectOptions = document.getElementById("lang");
 
-var loader = document.getElementById("loading");
-var convertBtn = document.getElementById("convert-btn");
-loader.classList.add("loader");
-
-convertBtn.addEventListener("click", function() {
-  loader.innerHTML = "Loading";
-  setTimeout(function() {
-      loader.innerHTML = ""
-  }, 3000)
+downloadBtn.addEventListener("click", e => {
+   console.log(e.target);
 });
 
+langSelectOptions.addEventListener("click", e => {
+  let selectedLang = e.target.value;
+  console.log(selectedLang);
+  return selectedLang;
+});

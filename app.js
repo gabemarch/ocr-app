@@ -3,11 +3,17 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const multer = require("multer");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+const routes = require("./routes/routes");
 const googleTranslate = require("google-translate")(
   "AIzaSyBAW3sA0BplDK2ox7yJkI2iMKtHgVgP91k"
 );
 const { TesseractWorker } = require("tesseract.js");
 
+const MONGODB_URI =
+  "mongodb+srv://gabe:VLEn0gdAj2uKobTt@ocr-cluster-bk1yr.mongodb.net/admin?retryWrites=true&w=majority";
 const worker = new TesseractWorker();
 
 //Storage
@@ -19,37 +25,64 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   }
 });
+
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions'
+})
+
+
 const upload = multer({ storage: storage }).single("avatar");
+
+
+
+
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-//Routes
-app.get("/", (req, res) => {
-  res.render("index");
-});
 
-app.post("/upload", (req, res) => {
+app.use("/", routes);
+
+app.post("/download", (req, res) => {
   upload(req, res, err => {
     fs.readFile(`./uploads/${req.file.originalname}`, (err, data) => {
       if (err) return console.log("This is your error message", err);
 
       worker
-        .recognize(data, "eng", { tessjs_create_pdf: "1" })
-
+        .recognize(data, "eng", { tessjs_create_pdf: "2" })
         .progress(progress => {
           console.log(progress);
         })
 
         .then(result => {
+          let translationTextResult;
           let text = result.text;
-          googleTranslate.translate(text, "hu", function(err, translation) {
-            let translationTextResult = translation.translatedText;
-            console.log(text);
-            console.log(translationTextResult);
-            res.send(`Original Text: ${text} <br/> Translated Text: ${translationTextResult}`);
+
+          //invoking google api
+          googleTranslate.translate(text, req.body.lang, function(
+            err,
+            translation
+          ) {
+            translationTextResult = translation.translatedText;
+            //rendering the ejs file
+            res.render("download", {
+              text: text,
+              translationTextResult: translationTextResult,
+              pageTitle: "Translated",
+              path: "/download"
+            });
+            //route to the download page
+
+            let path = `${__dirname}/translated.txt`;
+            let translationContent = translationTextResult;
+            return fs.writeFile(path, translationContent, err => {
+              if (err) console.log(err);
+              console.log(
+                `The file was written with the text: ${translationContent}`
+              );
+              return translationContent;
+            });
           });
-          
-          // res.redirect("/download");
         })
         .finally(() => {
           worker.terminate();
@@ -58,11 +91,17 @@ app.post("/upload", (req, res) => {
   });
 });
 
-app.get("/download", (req, res) => {
-  const file = `${__dirname}/tesseract.js-ocr-result.pdf`;
-  // const translatedFile = `${__dirname}/tesseract.js-ocr-result-hu.pdf`;
+mongoose.connect(MONGODB_URI).then(result => {
+  console.log(result);
+});
+
+app.get("/download/translated", (req, res) => {
+  const file = `${__dirname}/translated.txt`;
   res.download(file);
-  // await res.download(translatedFile);
+});
+app.get("/download/original", (req, res) => {
+  const file = `${__dirname}/tesseract.js-ocr-result.pdf`;
+  res.download(file);
 });
 
 //Start up our server

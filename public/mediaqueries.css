@@ -1,0 +1,49 @@
+@media screen and (max-width: 800px) {
+  .home-heading {
+    padding: 0;
+  }
+
+  .home-heading h1 {
+    max-width: 100%;
+    font-size: 4rem;
+    text-align: center;
+  }
+
+  .home-heading a {
+    text-align: center;
+    display: block;
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  .home-container {
+    flex-direction: column;
+  }
+
+  .download-section {
+    padding-top: 20px;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .download-original-text,
+  .download-translated-text {
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 100%;
+    padding-top: 40px;
+  }
+
+  .steps-guide {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .second-step {
+    position: relative;
+  }
+
+  #steps {
+    margin: 30px auto;
+    max-width: 50%;
+  }
+}

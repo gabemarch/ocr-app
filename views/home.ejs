@@ -1,0 +1,33 @@
+<%- include('../includes/head.ejs') %>
+
+</head>
+
+<body>
+
+    <div class="home">
+        <%- include('../includes/nav.ejs') %>
+        <div class="home-heading">
+            <h1>Images to text</h1>
+            <a href="/upload">Get Started</a>
+        </div>
+        <div class="home-container">
+            <div id="home-container-circles" class="circle-one" >
+                <p>Upload an image file (jpg, png)</p>
+                <img src="assets/upload-button.png" alt="" class="icon">
+            </div>
+            <div id="home-container-circles" class="circle-two">
+                <p>Convert to text file</p>
+                <img src="assets/circle.png" alt="" class="icon">
+            </div>
+            <div id="home-container-circles" class="circle-three">
+                <p>Translate to other languages</p>
+                <img src="assets/language.png" alt="" class="icon">
+            </div>
+            <div id="home-container-circles" class="circle-four">
+                <p>Download the translated text</p>
+                <img src="assets/download-button.png" alt="" class="icon">
+            </div>
+        </div>
+    </div>
+
+    <%- include('../includes/end.ejs') %>
