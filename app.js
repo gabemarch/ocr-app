@@ -5,7 +5,7 @@ const fs = require("fs");
 const multer = require("multer");
 const routes = require("./routes/routes");
 const googleTranslate = require("google-translate")(
-  "AIzaSyBAW3sA0BplDK2ox7yJkI2iMKtHgVgP91k"
+  
 );
 const { TesseractWorker } = require("tesseract.js");
 const worker = new TesseractWorker();
