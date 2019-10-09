@@ -3,17 +3,11 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const multer = require("multer");
-const mongoose = require("mongoose");
-const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session);
 const routes = require("./routes/routes");
 const googleTranslate = require("google-translate")(
- 
+  "AIzaSyBAW3sA0BplDK2ox7yJkI2iMKtHgVgP91k"
 );
 const { TesseractWorker } = require("tesseract.js");
-
-const MONGODB_URI =
-  "mongodb+srv://gabe:VLEn0gdAj2uKobTt@ocr-cluster-bk1yr.mongodb.net/admin?retryWrites=true&w=majority";
 const worker = new TesseractWorker();
 
 //Storage
@@ -26,17 +20,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const store = new MongoDBStore({
-  uri: MONGODB_URI,
-  collection: 'sessions'
-})
-
-
 const upload = multer({ storage: storage }).single("avatar");
-
-
-
-
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -89,10 +73,6 @@ app.post("/download", (req, res) => {
         });
     });
   });
-});
-
-mongoose.connect(MONGODB_URI).then(result => {
-  console.log(result);
 });
 
 app.get("/download/translated", (req, res) => {

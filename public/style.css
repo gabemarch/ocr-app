@@ -205,6 +205,10 @@
   transition: 0.3s ease-in-out;
 }
 
+.inputfile-success + label {
+  background-color: green;
+}
+
 .inputfile:focus + label,
 .inputfile + label:hover {
   background-color: #242582;
